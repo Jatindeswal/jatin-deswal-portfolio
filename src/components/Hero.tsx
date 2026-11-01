@@ -215,23 +215,46 @@ export const Hero = () => {
               {/* Terminal Body Content */}
               <div className="p-5 font-mono text-xs leading-relaxed text-slate-300 min-h-[300px] overflow-x-auto bg-slate-950/60">
                 {activeTab === 'whoami' && (
-                  <div className="space-y-3 animate-in fade-in duration-150">
+                  <div className="space-y-4 animate-in fade-in duration-150">
                     <div>
                       <span className="text-emerald-400">$</span>{' '}
                       <span className="text-slate-100">whoami --profile --verbose</span>
                     </div>
+
+                    {/* Responsive Flex Header with Profile Photo & Identity */}
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 pb-4 mb-4 border-b border-slate-800/80">
+                      {/* Photo Container */}
+                      <div className="relative shrink-0">
+                        <img
+                          src="/Jatin.png"
+                          alt="Jatin Deswal"
+                          className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover object-top border border-slate-700/80 ring-2 ring-emerald-500/30 shadow-lg shadow-emerald-950/50 shrink-0"
+                        />
+                        <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 ring-4 ring-slate-950 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                      </div>
+
+                      {/* Primary Identity Key-Values */}
+                      <div className="space-y-1.5 text-slate-300">
+                        <p>
+                          <span className="text-slate-500">engineer:</span>{' '}
+                          <span className="text-emerald-300 font-medium">Jatin Deswal</span>
+                        </p>
+                        <p>
+                          <span className="text-slate-500">role:</span>{' '}
+                          <span className="text-slate-200">AI &amp; Full-Stack Engineer</span>
+                        </p>
+                        <p>
+                          <span className="text-slate-500">location:</span>{' '}
+                          <span className="text-slate-200">Noida, Uttar Pradesh, India</span>
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Remaining Verbose Details Below Divider */}
                     <div className="space-y-1.5 pl-2 text-slate-300">
-                      <p>
-                        <span className="text-slate-500">engineer:</span>{' '}
-                        <span className="text-emerald-300 font-medium">Jatin Deswal</span>
-                      </p>
                       <p>
                         <span className="text-slate-500">education:</span>{' '}
                         <span className="text-slate-200">B.Tech CSE @ Amity University (2023-2027)</span>
-                      </p>
-                      <p>
-                        <span className="text-slate-500">location:</span>{' '}
-                        <span className="text-slate-200">Noida, Uttar Pradesh, India</span>
                       </p>
                       <p>
                         <span className="text-slate-500">specialization:</span>{' '}
