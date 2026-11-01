@@ -42,14 +42,57 @@ export const ProjectsSection = () => {
     return projects.filter((p) => p.category.includes(catId)).length;
   };
 
-  // Determine Bento column span for aesthetic asymmetry
-  const getBentoSpanClass = (project: Project, isAllFilter: boolean) => {
-    if (!isAllFilter) return 'col-span-1';
+  // Dynamically compute responsive grid spans so cards always fill the grid without awkward gaps
+  const getDynamicSpanClass = (index: number, total: number) => {
+    // Single project: full width showcase
+    if (total === 1) {
+      return 'col-span-1 md:col-span-2 lg:col-span-12';
+    }
 
-    if (project.id === 'vynix') return 'lg:col-span-2';
-    if (project.id === 'hivecore') return 'lg:col-span-2';
-    if (project.id === 'signal') return 'md:col-span-2 lg:col-span-3';
-    return 'lg:col-span-1';
+    // 2 projects: 2 equal columns (50% each)
+    if (total === 2) {
+      return 'col-span-1 md:col-span-1 lg:col-span-6';
+    }
+
+    // 3 projects: 3 equal columns (33.33% each)
+    if (total === 3) {
+      const mdSpan = index === 2 ? 'md:col-span-2' : 'md:col-span-1';
+      return `col-span-1 ${mdSpan} lg:col-span-4`;
+    }
+
+    // 4 projects: 2x2 grid (50% each)
+    if (total === 4) {
+      return 'col-span-1 md:col-span-1 lg:col-span-6';
+    }
+
+    // 5 projects:
+    // Row 1: 2 flagship hero cards (6 cols = 50% each)
+    // Row 2: 3 standard cards (4 cols = 33.33% each)
+    if (total === 5) {
+      if (index < 2) {
+        return 'col-span-1 md:col-span-1 lg:col-span-6';
+      }
+      const mdSpan = index === 4 ? 'md:col-span-2' : 'md:col-span-1';
+      return `col-span-1 ${mdSpan} lg:col-span-4`;
+    }
+
+    // 6 projects: 2 clean rows of 3 (4 cols each)
+    if (total === 6) {
+      return 'col-span-1 md:col-span-1 lg:col-span-4';
+    }
+
+    // Dynamic fallback for any N >= 7:
+    const remainder = total % 3;
+    if (remainder === 1) {
+      if (index === 0) return 'col-span-1 md:col-span-2 lg:col-span-12';
+      return 'col-span-1 md:col-span-1 lg:col-span-4';
+    } else if (remainder === 2) {
+      if (index < 2) return 'col-span-1 md:col-span-1 lg:col-span-6';
+      return 'col-span-1 md:col-span-1 lg:col-span-4';
+    }
+
+    // Default: 3 items per row
+    return 'col-span-1 md:col-span-1 lg:col-span-4';
   };
 
   return (
@@ -99,11 +142,10 @@ export const ProjectsSection = () => {
       </div>
 
       {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProjects.map((project) => {
-          const isAll = activeCategory === 'all';
-          const spanClass = getBentoSpanClass(project, isAll);
-          const isFlagship = project.id === 'vynix' || project.id === 'hivecore';
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+        {filteredProjects.map((project, index) => {
+          const spanClass = getDynamicSpanClass(index, filteredProjects.length);
+          const showDetailedPipeline = spanClass.includes('col-span-6') || spanClass.includes('col-span-12');
 
           return (
             <div
@@ -173,8 +215,8 @@ export const ProjectsSection = () => {
                   {project.description}
                 </p>
 
-                {/* Extra Architectural Snippet for Flagship Cards */}
-                {isFlagship && isAll && (
+                {/* Extra Architectural Snippet for Wide Showcase Cards */}
+                {showDetailedPipeline && (
                   <div className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs font-mono space-y-1.5">
                     <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
                       <Cpu className="w-3.5 h-3.5 text-emerald-400" />
