@@ -5,6 +5,7 @@ import { SkillsSection } from './components/SkillsSection';
 import { TimelineSection } from './components/TimelineSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { Analytics } from '@vercel/analytics/react';
 
 export function App() {
   return (
@@ -32,6 +33,9 @@ export function App() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Vercel Analytics */}
+      <Analytics />
     </div>
   );
 }
