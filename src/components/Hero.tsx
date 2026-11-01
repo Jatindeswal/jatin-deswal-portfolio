@@ -184,7 +184,7 @@ export const Hero = () => {
                   <span className="h-3 w-3 rounded-full bg-amber-500/80 border border-amber-600/60" />
                   <span className="h-3 w-3 rounded-full bg-emerald-500/80 border border-emerald-600/60" />
                   <span className="ml-2 text-xs font-mono text-slate-400 font-medium">
-                    jatin@portfolio:~
+                    jatin@deswal.me:~
                   </span>
                 </div>
 
